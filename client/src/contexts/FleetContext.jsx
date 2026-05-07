@@ -5,8 +5,8 @@ import { normalizeDriverCollection } from '../utils/normalizeDriver';
 import { normalizeOrderCollection } from '../utils/normalizeOrder';
 
 const FleetContext = createContext(null);
-const API_URL = 'http://localhost:5000/api';
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+const API_URL = 'https://fleetops-u9qd.onrender.com/api';
+const SOCKET_SERVER_URL = 'https://fleetops-u9qd.onrender.com';
 
 export function FleetProvider({ children }) {
   const [drivers, setDrivers] = useState([]);

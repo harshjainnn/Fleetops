@@ -52,8 +52,8 @@ const trafficHotspots = [
   { id: 't3', center: [28.5438, 77.3594], radius: 1000, color: '#f97316', fillOpacity: 0.08 }
 ];
 
-const SOCKET_SERVER_URL = 'http://localhost:5000';
-const API_URL = 'http://localhost:5000/api';
+const SOCKET_SERVER_URL = 'https://fleetops-u9qd.onrender.com';
+const API_URL = 'https://fleetops-u9qd.onrender.com/api';
 const LERP_FACTOR = 0.08;
 const MAP_THEMES = {
   standardDark: {

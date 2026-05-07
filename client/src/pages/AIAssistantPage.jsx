@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import { Send, Bot, User, Loader2, Cpu } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://fleetops-u9qd.onrender.com/api';
 
 export default function AIAssistantPage() {
   const { searchQuery = '' } = useOutletContext() || {};
