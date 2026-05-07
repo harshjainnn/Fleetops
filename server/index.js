@@ -24,6 +24,14 @@ app.use(express.json());
 // Routes
 app.use('/api', apiRoutes);
 
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
 // Socket.io setup
 setupSockets(io);
 
@@ -40,11 +48,11 @@ async function connectDB() {
     }
     await mongoose.connect(uri);
     console.log('Connected to MongoDB');
-    
+
     // Automatically seed mock data if collections are empty
     const { seedDatabase } = require('./seed');
     await seedDatabase();
-    
+
     // Start server
     const PORT = process.env.PORT || 5000;
     server.listen(PORT, () => {
