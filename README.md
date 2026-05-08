@@ -83,14 +83,9 @@ Open `http://localhost:5173` in your browser.
 - Implement an authentication layer for Admins vs Drivers.
 - Extend the MCP Server with external API integrations (e.g., Google Maps Distance Matrix API) instead of Haversine formulas.
 
-## Screenshots
-
-*(Insert screenshots of Dashboard, Live Map, Orders, and AI Chat UI here)*
 
 ## Deployment Links
-- **Frontend (Vercel):** (Coming soon)
-- **Backend (Render):** (Coming soon)
-- **Database:** MongoDB Atlas (Replace MONGODB_URI in `.env` to deploy)
+https://fleetops-u9qd.onrender.com/map
 
 ---
 *Developed as part of an Advanced AI Coding Assessment.*
