@@ -159,9 +159,12 @@ async function initializeFleetState() {
 }
 
 async function regenerateOrdersIfNeeded() {
-  const pendingOrders = fleetState.orders.filter(
-    o => o.status !== ORDER_STATUS.DELIVERED
-  );
+ const pendingOrders = fleetState.orders.filter(
+  o =>
+    o.status === ORDER_STATUS.PENDING ||
+    o.status === ORDER_STATUS.OUT_FOR_DELIVERY ||
+    o.status === ORDER_STATUS.DELAYED
+);
 
   if (pendingOrders.length === 0) {
     console.log('All orders delivered. Creating new orders...');
@@ -186,6 +189,7 @@ async function regenerateOrdersIfNeeded() {
     const insertedOrders = await Order.insertMany(newOrders);
 
     fleetState.orders.unshift(...insertedOrders);
+    fleetState.orders = fleetState.orders.slice(0, 40);
 
     // Assign idle drivers again
     const idleDrivers = fleetState.drivers.filter(
