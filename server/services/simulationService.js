@@ -158,6 +158,47 @@ async function initializeFleetState() {
   }
 }
 
+async function regenerateOrdersIfNeeded() {
+  const pendingOrders = fleetState.orders.filter(
+    o => o.status !== ORDER_STATUS.DELIVERED
+  );
+
+  if (pendingOrders.length === 0) {
+    console.log('All orders delivered. Creating new orders...');
+
+    const newOrders = [];
+
+    for (let i = 1; i <= 5; i++) {
+      const orderId = `ORD${Date.now()}${i}`;
+
+      newOrders.push({
+        orderId,
+        customerName: `Customer ${i}`,
+        destination: `Sector ${Math.floor(Math.random() * 50)}, New Delhi`,
+        status: ORDER_STATUS.PENDING,
+        coordinates: {
+          lat: 28.50 + Math.random() * 0.3,
+          lng: 77.10 + Math.random() * 0.3
+        }
+      });
+    }
+
+    const insertedOrders = await Order.insertMany(newOrders);
+
+    fleetState.orders.unshift(...insertedOrders);
+
+    // Assign idle drivers again
+    const idleDrivers = fleetState.drivers.filter(
+      d => d.status === DRIVER_STATUS.IDLE
+    );
+
+    for (const driver of idleDrivers) {
+      await assignNextOrder(driver, simulationIo);
+    }
+
+    console.log('New live orders generated');
+  }
+}
 function startSimulation(io) {
   simulationIo = io;
   initializeFleetState().then(() => {
@@ -263,7 +304,7 @@ function startSimulation(io) {
             await assignNextOrder(driver, io);
           }
         }
-
+        await regenerateOrdersIfNeeded();
         io.emit('fleet:update', fleetState);
 
       } catch (error) {
